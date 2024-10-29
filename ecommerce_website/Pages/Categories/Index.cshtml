@@ -1,0 +1,46 @@
+﻿@page
+@model ecommerce_website.Pages.Categories.IndexModel
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<section id="product1" class="section-p1">
+    <h2>Categories</h2>
+    <p>New Collection</p>
+
+    <div class="pro-container">
+        @foreach (var category in Model.categories)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.nomCategorie</h5>
+
+                        <div class="image-grid d-flex flex-wrap">
+                            @foreach (var imageUrl in category.imageUrls)
+                            {
+                                <div class="grid-image" style="width: 50%; height: 100px; background-size: cover; background-image: url('@imageUrl');"></div>
+                            }
+                        </div>
+                        <a asp-page="/Produits/Index" asp-route-idCategorie="@category.id" class="btn btn-secondary btn-sm mt-3">Voir Produits</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+    <style>
+        .image-grid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .grid-image {
+            width: 50%;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>

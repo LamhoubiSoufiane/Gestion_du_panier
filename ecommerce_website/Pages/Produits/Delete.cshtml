@@ -1,0 +1,58 @@
+﻿@page
+@model ecommerce_website.Pages.Produits.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Produit</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Produit.nomProduit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Produit.nomProduit)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Produit.description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Produit.description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Produit.prixProduit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Produit.prixProduit)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Produit.qteStock)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Produit.qteStock)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Produit.dateAjout)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Produit.dateAjout)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Produit.categorie)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Produit.categorie.id)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Produit.id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,53 @@
+﻿@page
+@model ecommerce_website.Pages.Produits.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<section id="product1" class="section-p1">
+    <div class="pro-container">
+        <div class="pro">
+            <img src="@Model.produit.imageUrl" alt="@Model.produit.nomProduit" class="img-fluid product-img" />
+            <div class="des">
+                <span class="product-name">@Model.produit.nomProduit</span>
+                <h5 class="product-desc">@Model.produit.description</h5>
+
+                <div class="product-details">
+                    <p><strong>Catégorie :</strong> @Model.produit.categorie.nomCategorie</p>
+                    <p><strong>Quantité en stock :</strong> @Model.produit.qteStock</p>
+                </div>
+
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+
+                <h4 class="product-price">@Model.produit.prixProduit Dh</h4>
+            </div>
+
+            <form method="post" asp-page-handler="AddToCart">
+                <input type="hidden" name="ProductId" value="@Model.produit.id" />
+                <input type="hidden" name="ProductName" value="@Model.produit.nomProduit" />
+                <input type="hidden" name="Price" value="@Model.produit.prixProduit" />
+
+                <div class="input-group">
+                    <label for="quantity-@Model.produit.id">Quantité :</label>
+                    <input type="number" name="Quantity" id="quantity-@Model.produit.id" value="1" min="1" max="@Model.produit.qteStock" class="input-quantity" />
+                </div>
+
+                <button type="submit" class="cart">
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>

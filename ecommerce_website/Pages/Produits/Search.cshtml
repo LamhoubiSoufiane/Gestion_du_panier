@@ -1,0 +1,31 @@
+﻿@page
+@model ecommerce_website.Pages.Produits.SearchModel
+@{
+    ViewData["Title"] = "Recherche de produits";
+}
+
+<h2>Résultats de la recherche</h2>
+
+@if (!Model.produits.Any())
+{
+    <p>Aucun produit ne correspond à votre recherche.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var product in Model.produits)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img class="card-img-top" src="@product.imageUrl" alt="Image du produit">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.nomProduit</h5>
+                        <p class="card-text">@product.description</p>
+                        <p class="card-text"><strong>@product.prixProduit Dh</strong></p>
+                        <a asp-page="Details" asp-route-productId="@product.id" class="btn btn-primary">Détails</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

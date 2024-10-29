@@ -1,0 +1,52 @@
+﻿@page
+@model ecommerce_website.Pages.Produits.IndexModel
+
+@{
+    ViewData["Title"] = "Produits";
+}
+
+<section id="product1" class="section-p1">
+    <h2>Products</h2>
+    <p>New Collection</p>
+    <div class="pro-container">
+        @foreach (var item in Model.produit)
+        {
+            <div class="pro">
+                <img src="@item.imageUrl" alt="@item.nomProduit" />
+                <div class="des">
+                    <span>@item.nomProduit</span>
+                    <h5>@item.description</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>@item.prixProduit</h4>
+                </div>
+                <form method="post" asp-page-handler="AddToCart">
+                    <input type="hidden" name="ProductId" value="@item.id" />
+                    <input type="hidden" name="idCategorie" value="@item.categorieId"/>
+                    <div class="input-group">
+                        <label for="quantity">Quantité :</label>
+                        <input type="number" name="quantitySelected" id="quantitySelected" value="1" min="1" max="@item.qteStock" class="input-quantity" />
+                    </div>
+                    <button type="submit" class="cart"><i class="fas fa-shopping-cart"></i> </button>
+                </form>
+                <div class="button-group">
+                    <button type="button" class="btn btn-details">
+                        <a asp-page="./Details" asp-route-productId="@item.id" class="btn btn-details">
+                            <i class="fas fa-info-circle"></i> Détails
+                        </a>
+
+                    </button>
+                </div>
+
+            </div>
+        }
+    </div>
+</section>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

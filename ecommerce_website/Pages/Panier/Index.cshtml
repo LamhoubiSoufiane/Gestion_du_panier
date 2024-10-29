@@ -1,0 +1,70 @@
+﻿@page
+@model ecommerce_website.Pages.Panier.IndexModel
+@{
+    ViewData["Title"] = "Mon Panier";
+}
+
+
+<section id="product1" class="section-p1">
+    <h2>Mon Panier</h2>
+    @if (Model.lignesPanier?.Count == 0 )
+    {
+        <p>Votre panier est vide.</p>
+    }
+    else
+    {
+        <div class="pro-container">
+            @foreach (var item in Model.lignesPanier)
+            {
+            <div class="pro">
+                <img src="@item.produit.imageUrl" alt="@item.produit.nomProduit" class="img-fluid product-img" />
+
+                <div class="des">
+                    <span class="product-name">@item.produit.nomProduit</span>
+                    <div class="star">
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <i class="fas fa-star"></i>
+                        }
+                    </div>
+                    <h4>@item.produit.prixProduit Dh</h4>
+                </div>
+                <!-- Cette section permet la mise à jour des quantités des produits dans le panier. En cliquant sur les boutons "-" ou "+",
+                        la fonction JavaScript `updateQuantity` (définie dans le fichier wwwroot/js/site.js) est appelée avec l'ID du produit et la quantité à ajouter ou soustraire.
+                        Après le clic sur "Valider", les quantités des produits sont modifiées dans le panier en conséquence. -->
+                <div class="input-group">
+                    <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(@item.id_produit, -1)">-</button>
+                    <label id="quantity-@item.id_produit" class="input-quantity">@item.quantite_ligne</label>
+                    <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(@item.id_produit, 1)">+</button>
+                </div>
+                <div class="total-price">
+                    Total : <span id="total-@item.id_produit" data-price="@item.produit.prixProduit">@(@item.produit.prixProduit * @item.quantite_ligne) Dh</span>
+                </div>
+                <form method="post" asp-page-handler="RemoveFromCart">
+                    <input type="hidden" name="ProductId" value="@item.id_produit" />
+                    <button type="submit" class="btn btn-primary delete-from-cart"><i class="fas fa-times"></i></button>
+                </form>
+            </div>
+            }
+        </div>
+
+        <h5>Total: <span id="totalPrice">@Model.TotalPrice</span> Dh</h5>
+        <div style="display: flex; gap: 10px;">
+            <!-- Ce formulaire envoie les nouvelles quantités des produits du panier au serveur pour les sauvegarder.
+                   Chaque quantité mise à jour est stockée dans un champ caché associé à l'ID du produit (Quantities[item.id_produit]).
+                    En cliquant sur le bouton "Valider", les données sont soumises en POST via le gestionnaire de page "SaveUpdates"
+                    pour enregistrer les modifications sur le serveur. -->
+            <form method="post" asp-page-handler="SaveUpdates">
+                @foreach (var item in Model.lignesPanier)
+                {
+                    <input type="hidden" name="Quantities[@item.id_produit]" id="hidden-quantity-@item.id_produit" value="@item.quantite_ligne" />
+                }
+                <button type="submit" class="btn btn-success">Valider</button>
+            </form>
+            <form method="post" asp-page-handler="ClearCart">
+                <button type="submit" class="btn btn-success">Vider Panier</button>
+            </form>
+        </div>
+        
+    }
+</section>
